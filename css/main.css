@@ -415,6 +415,14 @@ a:hover {
   height: 100%;
 }
 
+.showreel-content p {
+  max-width: 70ch;
+}
+
+.showreel-actions {
+  margin-top: var(--space-md);
+}
+
 /* Gallery */
 .gallery-grid {
   columns: 1;

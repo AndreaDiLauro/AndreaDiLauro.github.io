@@ -45,6 +45,8 @@ const translations = {
         // Showreel Section
         'showreel.title': 'Showreel',
         'showreel.videoTitle': 'Andrea Di Lauro — Showreel',
+        'showreel.description': 'Guarda lo showreel completo su YouTube o riproducilo qui sotto.',
+        'showreel.watchOnYouTube': 'Apri su YouTube',
         
         // Gallery Section
         'gallery.title': 'Galleria',
@@ -123,6 +125,8 @@ const translations = {
         // Showreel Section
         'showreel.title': 'Showreel',
         'showreel.videoTitle': 'Andrea Di Lauro — Showreel',
+        'showreel.description': 'Watch the full showreel on YouTube or play it below.',
+        'showreel.watchOnYouTube': 'Open on YouTube',
         
         // Gallery Section
         'gallery.title': 'Gallery',
