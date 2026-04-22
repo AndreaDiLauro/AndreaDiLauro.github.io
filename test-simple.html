@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <title>Simple Language Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .lang-btn { margin: 5px; padding: 8px 12px; border: 2px solid #8B6F3F; background: transparent; cursor: pointer; }
+        .lang-btn.active { background: #8B6F3F; color: white; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .debug { background: #f0f0f0; padding: 10px; margin: 10px 0; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Language Switching Test - Andrea Di Lauro Portfolio</h1>
+    
+    <div class="debug" id="debug-info">Loading debug info...</div>
+    
+    <div class="language-switcher">
+        <strong>Language:</strong>
+        <button class="lang-btn active" data-lang="it">Italiano</button>
+        <button class="lang-btn" data-lang="en">English</button>
+    </div>
+    
+    <div class="test-section">
+        <h2 data-translate="nav.about">Chi sono</h2>
+        <p data-translate="hero.tagline">Attrice versatile formata presso la Roma Film Academy — sul palco e sullo schermo.</p>
+        <p data-translate="about.p1">Andrea Di Lauro si è formata in recitazione cinematografica presso la Roma Film Academy (2022–2025) e studia DAMS all'Università di Teramo.</p>
+    </div>
+    
+    <div class="test-section">
+        <h3 data-translate="credits.title">Crediti / CV</h3>
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th data-translate="credits.year">Anno</th>
+                    <th data-translate="credits.titleCol">Titolo</th>
+                    <th data-translate="credits.type">Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2024</td>
+                    <td>Cibele</td>
+                    <td data-translate="credits.shortFilm">Cortometraggio</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="test-section">
+        <h3 data-translate="contact.title">Contatti</h3>
+        <p data-translate="contact.emailText">Se il modulo non funziona, scrivi a:</p>
+        <p><strong>Email:</strong> diandrealauro@gmail.com</p>
+        <p data-translate="contact.location">Vive a Roma, Italia</p>
+    </div>
+
+    <script src="/js/translations.js"></script>
+    <script>
+        // Debug and test script
+        document.addEventListener('DOMContentLoaded', function() {
+            const debugInfo = document.getElementById('debug-info');
+            
+            // Update debug info
+            function updateDebug() {
+                const translationsLoaded = typeof window.translations !== 'undefined';
+                const elementsCount = document.querySelectorAll('[data-translate]').length;
+                const buttonsCount = document.querySelectorAll('.lang-btn').length;
+                
+                debugInfo.innerHTML = `
+                    Translations loaded: ${translationsLoaded}<br>
+                    Translatable elements: ${elementsCount}<br>
+                    Language buttons: ${buttonsCount}<br>
+                    Current language: <span id="current-lang">it</span>
+                `;
+            }
+            
+            updateDebug();
+            
+            // Language switching logic
+            const langButtons = document.querySelectorAll('.lang-btn');
+            let currentLang = 'it';
+            
+            function setLanguage(lang) {
+                console.log('Setting language to:', lang);
+                currentLang = lang;
+                document.getElementById('current-lang').textContent = lang;
+                
+                if (!window.translations || !window.translations[lang]) {
+                    console.error('Translations not found for', lang);
+                    return;
+                }
+                
+                const elements = document.querySelectorAll('[data-translate]');
+                let success = 0, failed = 0;
+                
+                elements.forEach(element => {
+                    const key = element.dataset.translate;
+                    if (window.translations[lang][key]) {
+                        element.textContent = window.translations[lang][key];
+                        success++;
+                    } else {
+                        console.warn(`Missing translation: ${key} for ${lang}`);
+                        failed++;
+                    }
+                });
+                
+                console.log(`Translation result: ${success} success, ${failed} failed`);
+            }
+            
+            function updateActiveButton(lang) {
+                langButtons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.dataset.lang === lang) {
+                        button.classList.add('active');
+                    }
+                });
+            }
+            
+            // Add click listeners
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetLang = this.dataset.lang;
+                    console.log('Language button clicked:', targetLang);
+                    setLanguage(targetLang);
+                    updateActiveButton(targetLang);
+                });
+            });
+            
+            // Initial setup
+            setLanguage('it');
+            updateActiveButton('it');
+        });
+    </script>
+</body>
+</html>
